@@ -56,7 +56,7 @@ module ActiveRecord
       end
 
       def type_cast_from_database(value)
-        value.split(",")
+        value.split(",") if value.present?
       end
     end
   end
