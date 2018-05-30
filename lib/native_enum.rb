@@ -3,7 +3,13 @@ require 'active_record/base'
 require 'active_record/connection_adapters/abstract/schema_definitions.rb'
 
 require 'connection_adapters/sqlite3' if defined?( SQLite3 )
-require 'connection_adapters/mysql2' if defined?( Mysql2 )
+if defined?( Mysql2 )
+  if (ActiveRecord::VERSION::MAJOR == 5 && ActiveRecord::VERSION::MINOR >= 1)
+    require 'connection_adapters/mysql2_post51.rb'
+  else
+    require 'connection_adapters/mysql2.rb'
+  end
+end
 
 if ActiveRecord::VERSION::MAJOR < 4 || (ActiveRecord::VERSION::MAJOR == 4 && ActiveRecord::VERSION::MINOR <= 1)
   require 'native_enum/activerecord_enum_pre42.rb'
