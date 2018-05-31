@@ -55,9 +55,11 @@ module ActiveRecord
         @limit = options[:limit]
       end
 
-      def type_cast_from_database(value)
+      def deserialize(value)
         value.split(",") if value.present?
       end
+      # backward compatibility
+      alias_method :type_cast_from_database, :deserialize
     end
   end
 end
